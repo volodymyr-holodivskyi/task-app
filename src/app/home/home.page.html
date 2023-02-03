@@ -1,20 +1,15 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content [fullscreen]="true" (window:storage)="onStorageChange($event)">
+  <div>
+    <h2>Storage Data</h2>
+    <div *ngIf="(storageService.storageData | async) as storageData; else emptyStorageTemplate">
+      <div>{{storageData.email}}</div>
+      <div>{{storageData.password}}</div>
+    </div>
   </div>
+  
+  <ion-button color="primary" (click)="clearStorage()">Clear Storage</ion-button>
 </ion-content>
+
+<ng-template #emptyStorageTemplate>
+  <ion-skeleton-text [animated]="true"></ion-skeleton-text>
+</ng-template>
